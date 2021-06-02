@@ -94,6 +94,7 @@ export const bishopPermittedMoves = (
   /**
    * up and left
    */
+
   newPosition = [row - 1, column - 1];
 
   while (newPosition[0] >= 0 && newPosition[1] >= 0) {
