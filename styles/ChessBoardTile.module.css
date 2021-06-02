@@ -17,3 +17,9 @@
   top: 30px;
   opacity: 0.8;
 }
+
+.piece {
+  position: absolute !important;
+  left: 20px;
+  top: 20px;
+}

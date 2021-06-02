@@ -6,8 +6,13 @@ import {
   PieceColor,
   PieceName,
 } from "./permitted-moves";
+import _ from "lodash";
 
 const ChessBoard: FC = () => {
+  /**
+   * State
+   */
+
   const [chessBoardPosition, setChessBoardPosition] = useState([
     [
       "black-rook",
@@ -64,6 +69,15 @@ const ChessBoard: FC = () => {
 
   const [boardIsFlipped, setBoardIsFlipped] = useState(false);
 
+  const [currentPieceClickedPosition, setCurrentPieceClickedPosition] =
+    useState([0, 0]);
+
+  const [pieceIsBeingMoved, setPieceIsBeingMoved] = useState(false);
+
+  /**
+   * End State
+   */
+
   const updatePermittedMovesIndicators = (positions: [number, number][]) => {
     const newState: boolean[][] = [
       [false, false, false, false, false, false, false, false],
@@ -89,13 +103,32 @@ const ChessBoard: FC = () => {
     setIsShowingMovesIndicators(false);
   };
 
-  const handlePieceClick = (
+  const handleTileClick = (
     currentPiece: string | null,
     currentPosition: [number, number]
   ) => {
-    if (!currentPiece) return;
+    if (!currentPiece) {
+      // handle if is moving piece
+      if (pieceIsBeingMoved) {
+        const [row, column] = currentPieceClickedPosition;
+        const pieceToMove = chessBoardPosition[row][column];
+        console.log(currentPieceClickedPosition, pieceToMove);
+
+        const newChessBoardPosition = _.cloneDeep(chessBoardPosition);
+        newChessBoardPosition[currentPosition[0]][currentPosition[1]] =
+          pieceToMove;
+        newChessBoardPosition[row][column] = null;
+        setChessBoardPosition(newChessBoardPosition);
+
+        resetPermittedMovesIndicators();
+        setPieceIsBeingMoved(false);
+      }
+      return;
+    }
+
     if (isShowingMovesIndicators) {
       resetPermittedMovesIndicators();
+      setPieceIsBeingMoved(false);
       return;
     }
 
@@ -114,6 +147,8 @@ const ChessBoard: FC = () => {
 
     updatePermittedMovesIndicators(permittedMoves);
     setIsShowingMovesIndicators(true);
+    setPieceIsBeingMoved(true);
+    setCurrentPieceClickedPosition([...currentPosition]);
   };
 
   const transposeBoardPosition = (): (string | null)[][] => {
@@ -130,7 +165,6 @@ const ChessBoard: FC = () => {
   return (
     <div className="my-chess-board">
       <h1>Chess board</h1>
-
       <button onClick={() => setBoardIsFlipped(!boardIsFlipped)}>
         Flip Board
       </button>
@@ -161,9 +195,7 @@ const ChessBoard: FC = () => {
                   rowIndex={rowIndex}
                   tileIndex={tileIndex}
                   shouldShowMoveIndicator={shouldShowMoveIndicator}
-                  onClick={() =>
-                    handlePieceClick(currentPiece, currentPosition)
-                  }
+                  onClick={() => handleTileClick(currentPiece, currentPosition)}
                 />
               );
             })}

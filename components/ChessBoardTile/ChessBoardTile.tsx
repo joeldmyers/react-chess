@@ -26,6 +26,7 @@ const ChessBoardTile: FC<IProps> = ({
           width={60}
           height={60}
           onClick={onClick}
+          className={styles.piece}
         />
       )}
       {shouldShowMoveIndicator && (
@@ -34,6 +35,7 @@ const ChessBoardTile: FC<IProps> = ({
           width={40}
           height={40}
           className={styles.dot}
+          onClick={onClick}
         />
       )}
     </div>
