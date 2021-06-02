@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, FC } from "react";
 import ChessBoardTile from "../ChessBoardTile/ChessBoardTile";
 import {
   pawnPermittedMoves,
@@ -7,7 +7,7 @@ import {
   PieceName,
 } from "./permitted-moves";
 
-const ChessBoard = () => {
+const ChessBoard: FC = () => {
   const [chessBoardPosition, setChessBoardPosition] = useState([
     [
       "black-rook",
@@ -58,8 +58,11 @@ const ChessBoard = () => {
   const [permittedMovesIndicators, setPermittedMovesIndicators] = useState(
     new Array(8).fill(new Array(8).fill(false))
   );
+
   const [isShowingMovesIndicators, setIsShowingMovesIndicators] =
     useState(false);
+
+  const [boardIsFlipped, setBoardIsFlipped] = useState(false);
 
   const updatePermittedMovesIndicators = (positions: [number, number][]) => {
     const newState: boolean[][] = [
@@ -102,17 +105,37 @@ const ChessBoard = () => {
     let permittedMoves: [number, number][] = [];
 
     if (pieceType === "pawn") {
-      permittedMoves = pawnPermittedMoves(pieceColor, currentPosition);
+      permittedMoves = pawnPermittedMoves(
+        pieceColor,
+        currentPosition,
+        boardIsFlipped
+      );
     }
 
     updatePermittedMovesIndicators(permittedMoves);
     setIsShowingMovesIndicators(true);
   };
 
+  const transposeBoardPosition = (): (string | null)[][] => {
+    if (!boardIsFlipped) return chessBoardPosition;
+    return chessBoardPosition
+      .map((arr) => {
+        return arr.slice().reverse();
+      })
+      .reverse();
+  };
+
+  const transposedBoardPosition = transposeBoardPosition();
+
   return (
     <div className="my-chess-board">
       <h1>Chess board</h1>
-      {chessBoardPosition.map((chessBoardRow, rowIndex) => {
+
+      <button onClick={() => setBoardIsFlipped(!boardIsFlipped)}>
+        Flip Board
+      </button>
+
+      {transposedBoardPosition.map((chessBoardRow, rowIndex) => {
         return (
           <div
             key={`chess-board-row-${rowIndex}`}
@@ -123,7 +146,7 @@ const ChessBoard = () => {
                 (rowIndex % 2 === 0 && tileIndex % 2 === 0) ||
                 (rowIndex % 2 === 1 && tileIndex % 2 === 1);
 
-              const currentPiece = chessBoardPosition[rowIndex][tileIndex];
+              const currentPiece = transposedBoardPosition[rowIndex][tileIndex];
 
               const shouldShowMoveIndicator =
                 permittedMovesIndicators[rowIndex][tileIndex];

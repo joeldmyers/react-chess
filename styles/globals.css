@@ -14,3 +14,20 @@ a {
 * {
   box-sizing: border-box;
 }
+
+button {
+  all: unset;
+  color: #282828;
+  -webkit-text-fill-color: #282828;
+  cursor: pointer;
+  border: 1px solid #282828;
+  border-radius: 4px;
+  padding: 5px 10px;
+  margin: 30px 0;
+}
+
+button:hover {
+  background: #282828;
+  color: #fff;
+  -webkit-text-fill-color: #fff;
+}

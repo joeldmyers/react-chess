@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import ChessBoard from "../components/ChessBoard/ChessBoard";
@@ -11,6 +12,7 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>Update</main>
+
       <ChessBoard />
 
       <footer className={styles.footer}></footer>

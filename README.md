@@ -12,4 +12,3 @@
 
 - Add in turn logic
 - Connect to an AI API
-- Add ability to flip the board (would need to either update the position logic or maybe just flip the render method of the whole board)
