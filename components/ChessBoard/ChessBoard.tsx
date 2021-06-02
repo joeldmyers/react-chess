@@ -76,8 +76,6 @@ const ChessBoard = () => {
     for (var i = 0; i < positions.length; i++) {
       const position = positions[i];
       newState[position[0]][position[1]] = true;
-      // newState[0][0] = true;
-      console.log("wtf", newState);
     }
     setPermittedMovesIndicators(newState);
   };
@@ -106,7 +104,6 @@ const ChessBoard = () => {
     if (pieceType === "pawn") {
       permittedMoves = pawnPermittedMoves(pieceColor, currentPosition);
     }
-    console.log("HERE", permittedMoves);
 
     updatePermittedMovesIndicators(permittedMoves);
     setIsShowingMovesIndicators(true);
