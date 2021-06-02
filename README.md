@@ -1,5 +1,16 @@
 # react-chess
 
+This is using React + Typescript (+ Next.js mainly just for ease of deployment at this point) to create a working chess game.
+
+Note: this is currently a WIP.
+
+## Getting Started
+
+1. Clone the repo
+2. Install dependencies using `yarn`
+3. Run the dev server using `yarn dev`
+4. Go to `localhost:3000` to play chess :)
+
 ## To Do
 
 - Add coordinates on the sides
