@@ -101,7 +101,9 @@ export const bishopPermittedMoves = (
     newPosition = [newPosition[0] - 1, newPosition[1] - 1];
   }
 
-  // down and right
+  /**
+   * down and right
+   */
 
   newPosition = [row + 1, column + 1];
 
@@ -110,7 +112,9 @@ export const bishopPermittedMoves = (
     newPosition = [newPosition[0] + 1, newPosition[1] + 1];
   }
 
-  // down and left
+  /**
+   * down and left
+   */
 
   newPosition = [row + 1, column - 1];
 
