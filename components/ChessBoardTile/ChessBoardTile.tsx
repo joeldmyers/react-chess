@@ -1,5 +1,4 @@
 import React, { FC } from "react";
-import Img from "next/image";
 import styles from "../../styles/ChessBoardTile.module.css";
 
 interface IProps {
@@ -22,11 +21,10 @@ const ChessBoardTile: FC<IProps> = ({
   return (
     <div className={[styles.tile, isDark ? styles.dark : []].join(" ")}>
       {currentPiece && (
-        <Img
+        <img
           src={`/${currentPiece}.png`}
           width={60}
           height={60}
-          layout="responsive"
           onClick={onClick}
         />
       )}
