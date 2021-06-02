@@ -1,11 +1,6 @@
 import React, { useState, FC } from "react";
 import ChessBoardTile from "../ChessBoardTile/ChessBoardTile";
-import {
-  pawnPermittedMoves,
-  PieceType,
-  PieceColor,
-  PieceName,
-} from "./permitted-moves";
+import { getPermittedMoves } from "./permitted-moves";
 import _ from "lodash";
 
 const ChessBoard: FC = () => {
@@ -66,8 +61,6 @@ const ChessBoard: FC = () => {
 
   const [isShowingMovesIndicators, setIsShowingMovesIndicators] =
     useState(false);
-
-  const [boardIsFlipped, setBoardIsFlipped] = useState(false);
 
   const [currentPieceClickedPosition, setCurrentPieceClickedPosition] =
     useState([0, 0]);
@@ -134,42 +127,22 @@ const ChessBoard: FC = () => {
 
     const splitPieceName = currentPiece.split("-");
     const [pieceColor, pieceType] = currentPiece.split("-");
-
-    let permittedMoves: [number, number][] = [];
-
-    if (pieceType === "pawn") {
-      permittedMoves = pawnPermittedMoves(
-        pieceColor,
-        currentPosition,
-        boardIsFlipped
-      );
-    }
-
+    const permittedMoves = getPermittedMoves(
+      pieceType,
+      pieceColor,
+      currentPosition
+    );
     updatePermittedMovesIndicators(permittedMoves);
     setIsShowingMovesIndicators(true);
     setPieceIsBeingMoved(true);
     setCurrentPieceClickedPosition([...currentPosition]);
   };
 
-  const transposeBoardPosition = (): (string | null)[][] => {
-    if (!boardIsFlipped) return chessBoardPosition;
-    return chessBoardPosition
-      .map((arr) => {
-        return arr.slice().reverse();
-      })
-      .reverse();
-  };
-
-  const transposedBoardPosition = transposeBoardPosition();
-
   return (
     <div className="my-chess-board">
       <h1>Chess board</h1>
-      <button onClick={() => setBoardIsFlipped(!boardIsFlipped)}>
-        Flip Board
-      </button>
 
-      {transposedBoardPosition.map((chessBoardRow, rowIndex) => {
+      {chessBoardPosition.map((chessBoardRow, rowIndex) => {
         return (
           <div
             key={`chess-board-row-${rowIndex}`}
@@ -180,7 +153,7 @@ const ChessBoard: FC = () => {
                 (rowIndex % 2 === 0 && tileIndex % 2 === 0) ||
                 (rowIndex % 2 === 1 && tileIndex % 2 === 1);
 
-              const currentPiece = transposedBoardPosition[rowIndex][tileIndex];
+              const currentPiece = chessBoardPosition[rowIndex][tileIndex];
 
               const shouldShowMoveIndicator =
                 permittedMovesIndicators[rowIndex][tileIndex];
