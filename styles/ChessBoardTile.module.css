@@ -1,0 +1,10 @@
+.tile {
+  width: 100px;
+  height: 100px;
+  display: inline-block;
+  padding: 20px;
+}
+
+.tile.dark {
+  background: #8c6b44;
+}
