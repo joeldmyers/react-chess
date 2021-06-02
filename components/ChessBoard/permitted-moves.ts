@@ -5,7 +5,9 @@ export type PieceType =
   | "queen"
   | "king"
   | "knight";
+
 export type PieceColor = "black" | "white";
+
 export type PieceName =
   | "black-bishop"
   | "black-king"
