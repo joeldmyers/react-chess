@@ -2,6 +2,8 @@
 
 This is using React + Typescript (+ Next.js mainly just for ease of deployment at this point) to create a working chess game.
 
+Demo here: https://react-chess-o476zxr03-joeldmyers.vercel.app/
+
 Note: this is currently a WIP.
 
 ## Getting Started
