@@ -4,7 +4,7 @@ This is using React + Typescript (+ Next.js mainly just for ease of deployment a
 
 Demo here: https://react-chess-o476zxr03-joeldmyers.vercel.app/
 
-Note: this is currently a WIP.
+Note: this is currently a WIP and is currently only set up for desktop.
 
 ## Getting Started
 
