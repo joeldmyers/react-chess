@@ -135,9 +135,7 @@ export const knightPermittedMoves = (
   currentPosition: PieceCoordinate
 ): PieceCoordinate[] => {
   const [row, column] = currentPosition;
-  let permittedMoves: PieceCoordinate[] = [];
 
-  // create all possible rows, clockwise
   const possibleKnightMoves: PieceCoordinate[] = [
     [row - 2, column + 1],
     [row - 1, column + 2],
@@ -149,18 +147,7 @@ export const knightPermittedMoves = (
     [row - 2, column - 1],
   ];
 
-  for (var i = 0; i < possibleKnightMoves.length; i++) {
-    const proposedMove: PieceCoordinate = possibleKnightMoves[i];
-    const [currentRow, currentColumn] = proposedMove;
-    if (
-      currentRow <= 7 &&
-      currentRow >= 0 &&
-      currentColumn <= 7 &&
-      currentColumn >= 0
-    ) {
-      permittedMoves.push(proposedMove);
-    }
-  }
+  const permittedMoves = getOnlyInBoundsMoves(possibleKnightMoves);
   return permittedMoves;
 };
 
@@ -169,9 +156,7 @@ export const kingPermittedMoves = (
   currentPosition: PieceCoordinate
 ): PieceCoordinate[] => {
   const [row, column] = currentPosition;
-  let permittedMoves: PieceCoordinate[] = [];
 
-  // clockwise
   const possibleKingMoves: PieceCoordinate[] = [
     [row - 1, column],
     [row - 1, column + 1],
@@ -183,8 +168,18 @@ export const kingPermittedMoves = (
     [row - 1, column - 1],
   ];
 
-  for (var i = 0; i < possibleKingMoves.length; i++) {
-    const proposedMove: PieceCoordinate = possibleKingMoves[i];
+  const permittedMoves = getOnlyInBoundsMoves(possibleKingMoves);
+
+  return permittedMoves;
+};
+
+const getOnlyInBoundsMoves = (
+  pieceCoordinates: PieceCoordinate[]
+): PieceCoordinate[] => {
+  let possibleMoves: PieceCoordinate[] = [];
+
+  for (var i = 0; i < pieceCoordinates.length; i++) {
+    const proposedMove: PieceCoordinate = pieceCoordinates[i];
     const [currentRow, currentColumn] = proposedMove;
     if (
       currentRow <= 7 &&
@@ -192,11 +187,11 @@ export const kingPermittedMoves = (
       currentColumn <= 7 &&
       currentColumn >= 0
     ) {
-      permittedMoves.push(proposedMove);
+      possibleMoves.push(proposedMove);
     }
   }
 
-  return permittedMoves;
+  return possibleMoves;
 };
 
 export const getPermittedMoves = (
