@@ -111,7 +111,7 @@ const ChessBoard = () => {
 
   return (
     <div className="my-chess-board">
-      <h1>Test</h1>
+      <h1>Chess board</h1>
       {chessBoardPosition.map((chessBoardRow, rowIndex) => {
         return (
           <div
